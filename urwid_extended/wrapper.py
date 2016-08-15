@@ -7,6 +7,7 @@ __all__ = [
     'SearchableWidgetWrapper',
 ]
 
+
 class SearchableWidgetWrapper(urwid.WidgetWrap):
     """
     This class wrap a container and allow to focus on the looked field.
@@ -41,7 +42,9 @@ class SearchableWidgetWrapper(urwid.WidgetWrap):
         """
         super().__init__(wrapped_widget)
         if not isinstance(wrapped_widget, WidgetContainerListContentsMixin):
-            raise ValueError("SearchableListBox must wrap ContainerListContentsMixin, wrapped is {}".format(type(wrapped_widget)))
+            raise ValueError("SearchableListBox must wrap "
+                             "ContainerListContentsMixin, wrapped is {}".
+                             format(type(wrapped_widget)))
         self.looked_field = looked_field
         self._search = ''
 
@@ -55,7 +58,8 @@ class SearchableWidgetWrapper(urwid.WidgetWrap):
         :param new_search: the new_searchable field
         :type new_search: str
         """
-        #for index in self._w: #FIXME: see https://github.com/urwid/urwid/pull/201
+        # FIXME: see https://github.com/urwid/urwid/pull/201
+        # for index in self._w:
         for index in self._w.__iter__():
             item = self._w[index]
             if self.looked_field(item).startswith(new_search):
@@ -90,10 +94,9 @@ class SearchableWidgetWrapper(urwid.WidgetWrap):
             return key
 
 
-
 def _test():
     import doctest
     doctest.testmod()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     _test()

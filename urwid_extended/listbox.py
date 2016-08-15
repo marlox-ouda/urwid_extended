@@ -8,6 +8,7 @@ __all__ = [
     'SortedFocusListWalker',
 ]
 
+
 class SortedFocusListWalker(urwid.SimpleFocusListWalker):
     """
     This class triggers all operations of list manipulation to maintain the
@@ -77,7 +78,8 @@ class SortedFocusListWalker(urwid.SimpleFocusListWalker):
         >>> sw.add(7); sw
         SortedFocusListWalker([1, 5, 7, 10], focus=0)
         >>> contents = [(1, 10), (4, 2), (0, 7)]
-        >>> sw = SortedFocusListWalker(contents, sorting_key=lambda x: x[1], reverse=True)
+        >>> sw = SortedFocusListWalker(contents, sorting_key=lambda x: x[1],
+        ...                            reverse=True)
         >>> sw.add((100, 4)); sw
         SortedFocusListWalker([(1, 10), (0, 7), (100, 4), (4, 2)], focus=0)
         """
@@ -95,7 +97,9 @@ class SortedFocusListWalker(urwid.SimpleFocusListWalker):
 
         See also :meth:`.add`
         """
-        warnings.warn('Usage of SortedFocusListWalker.append is wrong. SortedFocusListWalker manage indexing itself. Use SortedFocusListWalker.add instead')
+        warnings.warn("Usage of SortedFocusListWalker.append is wrong. "
+                      "SortedFocusListWalker manage indexing itself. "
+                      "Use SortedFocusListWalker.add instead")
         return self.add(new_item)
 
     def extend(self, new_items):
@@ -110,11 +114,15 @@ class SortedFocusListWalker(urwid.SimpleFocusListWalker):
         >>> sw.extend([0, 2, -10, 14]); sw
         SortedFocusListWalker([-10, 0, 1, 2, 10, 14], focus=2)
         >>> contents = [(1, 10), (4, 2), (0, 7)]
-        >>> sw = SortedFocusListWalker(contents, sorting_key=lambda x: x[1], reverse=True)
-        >>> sw.extend([(100, 4), (20, 20)]); sw
-        SortedFocusListWalker([(20, 20), (1, 10), (0, 7), (100, 4), (4, 2)], focus=1)
+        >>> sw = SortedFocusListWalker(contents, sorting_key=lambda x: x[1],
+        ...                            reverse=True)
+        >>> sw.extend([(100, 4), (20, 20)])
+        >>> sw # doctest: +NORMALIZE_WHITESPACE
+        SortedFocusListWalker([(20, 20), (1, 10), (0, 7), (100, 4), (4, 2)],
+        focus=1)
         """
-        for item in sorted(new_items, key=self.sorting_key, reverse=self.reverse):
+        for item in sorted(new_items, key=self.sorting_key,
+                           reverse=self.reverse):
             self.add(item)
 
     def insert(self, index, item):
@@ -125,7 +133,9 @@ class SortedFocusListWalker(urwid.SimpleFocusListWalker):
 
         See also :meth:`.add`
         """
-        warnings.warn('Usage of SortedFocusListWalker.insert is wrong. SortedFocusListWalker manage indexing itself. Use SortedFocusListWalker.add instead')
+        warnings.warn("Usage of SortedFocusListWalker.insert is wrong. "
+                      "SortedFocusListWalker manage indexing itself. "
+                      "Use SortedFocusListWalker.add instead")
         return self.add(item)
 
     def sort(self, sorting_key=lambda x: x, reverse=False):
@@ -145,19 +155,18 @@ class SortedFocusListWalker(urwid.SimpleFocusListWalker):
         SortedFocusListWalker([(30, -5), (0, 7), (-1, 10), (4, 20)], focus=2)
         >>> sw.sort(reverse=True); sw
         SortedFocusListWalker([(30, -5), (4, 20), (0, 7), (-1, 10)], focus=3)
-        >>> sw.add((2, 2)); sw
-        SortedFocusListWalker([(30, -5), (4, 20), (2, 2), (0, 7), (-1, 10)], focus=4)
+        >>> sw.add((2, 2)); sw # doctest: +NORMALIZE_WHITESPACE
+        SortedFocusListWalker([(30, -5), (4, 20), (2, 2), (0, 7), (-1, 10)],
+        focus=4)
         """
         self.sorting_key = sorting_key
         self.reverse = reverse
         return super().sort(key=self.sorting_key, reverse=self.reverse)
-        
 
 
 def _test():
     import doctest
     doctest.testmod()
 
-if __name__=='__main__':
+if __name__ == '__main__':
     _test()
-
